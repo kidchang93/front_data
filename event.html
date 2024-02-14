@@ -6,12 +6,13 @@
 		<title>event</title>
 		<script>
 			const clickEvent = function () {
-				console.log("click");
+				// console.log("click");
+				document.getElementById("box").innerText = "click"; // blank -> click
 			};
 		</script>
 	</head>
 	<body>
-		<button onmouseover="javascript:console.log('click');">click</button>
 		<button onclick="javascript:clickEvent();">click</button>
+		<div id="box">blank</div>
 	</body>
 </html>

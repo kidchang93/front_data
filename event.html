@@ -10,9 +10,10 @@
 				document.getElementById("box").innerText = "click"; // blank -> click
 				const list = document.getElementById("list");
 				const lilist = document.getElementsByTagName("li");
-				lilist[0].innerText = "click1";
-				lilist[1].innerText = "click2";
-				lilist[2].innerText = "click3";
+				// console.log(lilist.length);
+				for (let index = 0; index < lilist.length; index++) {
+					lilist[index].innerHTML = "click" + (index + 1);
+				}
 			};
 		</script>
 	</head>
@@ -23,6 +24,9 @@
 			<li>1</li>
 			<li>2</li>
 			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+			<li>6</li>
 		</ul>
 	</body>
 </html>

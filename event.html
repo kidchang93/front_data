@@ -8,11 +8,21 @@
 			const clickEvent = function () {
 				// console.log("click");
 				document.getElementById("box").innerText = "click"; // blank -> click
+				const list = document.getElementById("list");
+				const lilist = document.getElementsByTagName("li");
+				lilist[0].innerText = "click1";
+				lilist[1].innerText = "click2";
+				lilist[2].innerText = "click3";
 			};
 		</script>
 	</head>
 	<body>
 		<button onclick="javascript:clickEvent();">click</button>
 		<div id="box">blank</div>
+		<ul id="list">
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+		</ul>
 	</body>
 </html>

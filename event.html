@@ -15,10 +15,18 @@
 					lilist[index].innerHTML = "click" + (index + 1);
 				}
 			};
+
+			// body page loading 완료 후 발생하는 이벤트로 딱 한번 실행.
+			window.onload = function () {
+				document.getElementById("btn").onclick = function () {
+					clickEvent();
+				};
+			};
 		</script>
 	</head>
 	<body>
-		<button onclick="javascript:clickEvent();">click</button>
+		<!-- <button onclick="javascript:clickEvent();">click</button> -->
+		<button id="btn">click</button>
 		<div id="box">blank</div>
 		<ul id="list">
 			<li>1</li>

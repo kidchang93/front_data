@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>attribute / property</title>
+	</head>
+	<script type="text/javaScript">
+		const init = () => {
+			document.getElementById("btn").num = "9999";
+
+			// document.getElementById("btn").onclick = (e) => { 애로우 함수에선 console.log(e.currentTarget.num) 이렇게 써야됨. }
+			document.getElementById("btn").onclick = function () {
+				console.log(this.num);
+				const list = document.getElementById("list");
+				const aTagList = list.getElementsByTagName("a");
+				console.log(aTagList);
+				for (let index = 0; index < aTagList.length; index++) {
+					console.log(aTagList[index].getAttribute("num"));
+				}
+				// const link1 = document.getElementById("link1");
+				// console.log(link1.getAttribute("num"));	//  DOM 에 접근을 햇나 안했나
+				// const link2 = document.getElementById("link2");
+				// console.log(link1.getAttribute("num"));
+				// link.href = "http://www.google.com";
+				// link.innerText = "google";
+				// link.target = "_blank";
+
+			}
+			// console.log('page load!');
+
+		}
+		window.onload = init;
+	</script>
+	<body>
+		<button id="btn">click</button>
+		<hr />
+		<!-- <a href="http://www.naver.com" id="link">naver</a> -->
+		<ul id='list'>
+			<li><a href="http://www.naver.com" id="link1" num='1'>naver</a></li>
+			<li><a href="http://www.google.com" id="link2" num='2'></a>google</a></li>
+		</ul>
+	</body>
+</html>

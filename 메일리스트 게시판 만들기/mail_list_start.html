@@ -22,7 +22,8 @@
 					}
 				};
 
-				document.getElementById("checkAll").onclick = function () {
+				const checkAllInput = document.getElementById("checkAll");
+				checkAllInput.onclick = function () {
 					console.log(this.checked);
 					for (let index = 0; index < mailIdList.length; index++) {
 						const mailIdTr = document.getElementById(
@@ -51,6 +52,7 @@
 						} else {
 							mailIdTr.className = "";
 						}
+						checkAllInput.checked = false;
 					};
 				}
 			};

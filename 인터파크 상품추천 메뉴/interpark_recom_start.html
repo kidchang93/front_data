@@ -1,58 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
- <head>
-  <meta charset="UTF-8">
-  <title> new document </title>
-  <link href="css/style.css" type="text/css" rel="stylesheet" />
-  <script type="text/javascript">
-	  
-  </script>
- </head>
- <body style="padding:100px;">
-	<div class="customerSection">
-		<div class="custom_name"><em>인터파크</em> 고객님,</div>
-		<div class="custom_tit"><img src="images/tit_custom.gif" alt="이 상품은 어떠세요?"></div>
-		<div class="custom_part" style="display: block;">
-			<div class="bx-wrapper" style="max-width: 310px;">
-				<div class="bx-viewport">
-					<ul id="bannerList">
-						<li style="display:block;">
-							<a href="#"><img src="images/1.jpg" alt="쇼핑추천"></a>
-						</li>
-						<li style="display:none;">
-							<a href="#"><img src="images/2.jpg" alt="도서추천"></a>
-						</li>
-						<li style="display:none;">
-							<a href="#"><img src="images/3.jpg" alt="티켓추천"></a>
-						</li>
+	<head>
+		<meta charset="UTF-8" />
+		<title>new document</title>
+		<link href="css/style.css" type="text/css" rel="stylesheet" />
+		<script type="text/javascript">
+			const init = function () {
+				document.getElementById("nextBtn").onclick = function () {
+					const activeList = pagingList.getElementsByClassName("active"); // 이 get 은 컬렉션으로 넘어오기 때문.
+					let num = activeList[0].num + 1;
+					console.log(num);
+					if (num >= aTagList.length) {
+						num = 0;
+						console.log(num);
+					}
+					aTagList[num].onmouseenter();
+				};
+				document.getElementById("prevBtn").onclick = function () {
+					const activeList = pagingList.getElementsByClassName("active"); // 이 get 은 컬렉션으로 넘어오기 때문.
+					let num = activeList[0].num - 1;
+					console.log(num);
+					if (num < 0) {
+						num = aTagList.length - 1;
+						console.log(num);
+					}
+					aTagList[num].onmouseenter();
+				};
 
-						<li style="display:none;">
-							<a href="#"><img src="images/4.jpg" alt="투어추천"></a>
-						</li>
-					</ul>
-				</div>
-				<div class="bx-controls bx-has-pager bx-has-controls-direction">
-					<div id="pagingList" class="bx-pager bx-default-pager">
-						<div class="bx-pager-item">
-							<a href="#" class="bx-pager-link active">1</a>
-						</div>
-						<div class="bx-pager-item">
-							<a href="#" class="bx-pager-link">2</a>
-						</div>
-						<div class="bx-pager-item">
-							<a href="#" class="bx-pager-link">3</a>
-						</div>
-						<div class="bx-pager-item">
-							<a href="#" class="bx-pager-link">4</a>
-						</div>
+				const pagingList = document.getElementById("pagingList");
+				const aTagList = pagingList.getElementsByTagName("a");
+				const bannerList = document.getElementById("bannerList");
+				const liTagList = bannerList.getElementsByTagName("li");
+				console.log(bannerList);
+				console.log(liTagList);
+				for (let i = 0; i < aTagList.length; i++) {
+					// i = 0,1,2,3
+					aTagList[i].num = i;
+					aTagList[i].onmouseenter = function () {
+						// 변수를 var로 바꾸고 log 안에 i 라는 값을 넣으면 4라는 값으로만 나온다.
+						// 그걸 방지하는게 this.num 이라는 변수를 쓰는 이유. (let으로 바꿔도 var로 바꿔도 상관없음)
+						console.log(this.num);
+						for (let j = 0; j < aTagList.length; j++) {
+							// this가 가리키는건 가장 가까운 이벤트 핸들러가 있는 onmouseenter 앞에 i 이다. ( 단순히 함수이기 때문에 )
+							console.log(j, this.num);
+							if (j == this.num) {
+								// aTagList[j].className = "bx-pager-link active";
+								aTagList[j].classList.add("active");
+								liTagList[j].style.display = "block";
+							} else {
+								// aTagList[j].className = "bx-pager-link";
+								aTagList[j].classList.remove("active");
+								liTagList[j].style.display = "none";
+							}
+						}
+					};
+				}
+			};
+			window.onload = init;
+		</script>
+	</head>
+	<body style="padding: 100px">
+		<div class="customerSection">
+			<div class="custom_name"><em>인터파크</em> 고객님,</div>
+			<div class="custom_tit">
+				<img src="images/tit_custom.gif" alt="이 상품은 어떠세요?" />
+			</div>
+			<div class="custom_part" style="display: block">
+				<div class="bx-wrapper" style="max-width: 310px">
+					<div class="bx-viewport">
+						<ul id="bannerList">
+							<li style="display: block">
+								<a href="#"><img src="images/1.jpg" alt="쇼핑추천" /></a>
+							</li>
+							<li style="display: none">
+								<a href="#"><img src="images/2.jpg" alt="도서추천" /></a>
+							</li>
+							<li style="display: none">
+								<a href="#"><img src="images/3.jpg" alt="티켓추천" /></a>
+							</li>
+
+							<li style="display: none">
+								<a href="#"><img src="images/4.jpg" alt="투어추천" /></a>
+							</li>
+						</ul>
 					</div>
-					<div class="bx-controls-direction">
-						<a class="bx-prev" href="#" id="prevBtn">Prev</a>
-						<a class="bx-next" href="#" id="nextBtn">Next</a>
+					<div class="bx-controls bx-has-pager bx-has-controls-direction">
+						<div id="pagingList" class="bx-pager bx-default-pager">
+							<div class="bx-pager-item">
+								<a href="#" class="bx-pager-link active">1</a>
+							</div>
+							<div class="bx-pager-item">
+								<a href="#" class="bx-pager-link">2</a>
+							</div>
+							<div class="bx-pager-item">
+								<a href="#" class="bx-pager-link">3</a>
+							</div>
+							<div class="bx-pager-item">
+								<a href="#" class="bx-pager-link">4</a>
+							</div>
+						</div>
+						<div class="bx-controls-direction">
+							<a class="bx-prev" href="#" id="prevBtn">Prev</a>
+							<a class="bx-next" href="#" id="nextBtn">Next</a>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
- </body>
+	</body>
 </html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Document</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script type="text/javascript">
+			const init = function () {
+				$("#box").on("click", function () {
+					// this.innerText = "box click";
+					$(this).text("box");
+					// $("#box").text("box");
+					const propId = $(this).prop("id");
+					const attrId = $(this).attr("id");
+					console.log(propId == attrId);
+				});
+				$("#addBtn").on("click", function () {
+					$("#myList").append("<li>a</li>");
+					// $("#myList").prepend("<li>a</li>");
+					const li = document.createElement("li");
+					$("#myList").append(li);
+				});
+				$("#delBtn").on("click", function () {
+					// $("#box").remove();
+					$("#myList li:first").remove();
+				});
+			};
+			window.onload = init;
+		</script>
+	</head>
+	<body>
+		<button id="addBtn">add</button> <button id="delBtn">delete</button>
+		<ul id="myList">
+			<li>temp</li>
+		</ul>
+		<div id="box">text</div>
+	</body>
+</html>

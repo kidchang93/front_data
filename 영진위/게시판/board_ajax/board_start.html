@@ -66,6 +66,7 @@
 								if (data.result == "Y") {
 									alert("입력 성공!");
 									$("#writeCloseBtn").trigger("click");
+									getList();
 								} else {
 									alert("입력 실패");
 								}
@@ -92,9 +93,9 @@
 						if (data.result == 0) {
 							// data empty
 							/*
-                <tr>
-                  <td colspan="4" style="text-align: center">등록 된 내용이 없습니다.</td>
-                </tr>
+			             <tr>
+			               <td colspan="4" style="text-align: center">등록 된 내용이 없습니다.</td>
+			             </tr>
 			        */
 							const tr = document.createElement("tr");
 							const tdText =
@@ -104,15 +105,15 @@
 						} else {
 							// data list
 							/*
-              <tr>
-                <td>5</td>
-                <td>테스트 5</td>
-                <td>2022-02-02 16:51:02</td>
-                <td>
-                  <button type="button" class="btn btn-success mr-1">수정</button><button type="button" class="btn btn-danger">삭제</button>
-                </td>
-              </tr>
-              */
+			           <tr>
+			             <td>5</td>
+			             <td>테스트 5</td>
+			             <td>2022-02-02 16:51:02</td>
+			             <td>
+			               <button type="button" class="btn btn-success mr-1">수정</button><button type="button" class="btn btn-danger">삭제</button>
+			             </td>
+			           </tr>
+			           */
 							$(data.result).each(function (index, element) {
 								console.log(index, element);
 								const tr = document.createElement("tr");
@@ -142,7 +143,7 @@
 											if (data.result.length == 0) {
 												alert("조회하신 정보가 없습니다.");
 											} else {
-												modifyFormInit(data.result[0]);
+												modifyForm(data.result[0]);
 												// console.log("view result", data);
 											}
 										},
@@ -151,9 +152,37 @@
 										},
 									});
 								});
+								// 삭제 버튼
+
 								$(deleteBtn).data("id", element.id);
 								$(deleteBtn).on("click", function () {
 									console.log($(this).data("id"));
+									if (confirm("정말 삭제할까요?")) {
+										const apiUrl =
+											"http://diddudqh.dothome.co.kr/board/delete.php";
+										console.log($(this).data("id"));
+
+										$.ajax({
+											type: "GET",
+											url: apiUrl,
+											data: {
+												id: $(this).data("id"),
+											},
+											dataType: "json",
+											success: function (data) {
+												console.log(data);
+												if (data.result == "Y") {
+													alert("삭제 성공!");
+													getList();
+												} else {
+													alert("삭제 실패");
+												}
+											},
+											error: function (jqXHR, textStatus, errorThrown) {
+												console.log(textStatus + "," + errorThrown);
+											},
+										});
+									}
 								});
 								$("#list tbody").append(tr);
 							});
@@ -164,24 +193,92 @@
 					},
 				});
 			};
-			// 수정 폼 초기화
-			const modifyFormInit = function (data) {
+			// 수정 폼 초기화 ( 오류 수정 전 )
+			/*const modifyFormInit = function (data) {
 				$("#list,#regBtn").hide();
 				$("#modifyForm").show();
 				$("#modifyForm input[name='id']").val(data.id);
 				$("#modifyForm input[name='title']").val(data.title);
 				$("#modifyForm textarea[name='content']").val(data.content);
 				console.log("데이터", data);
-				// 수정 창 닫기 버튼
+				// 수정 창 닫기 버튼 ( 문제 발생 )
 				$("#modifyCloseBtn").on("click", function () {
+					console.log(this); // 현 상태에서 찍으면 닫기버튼의 개수가 늘어난다.
 					$("#list,#regBtn").show();
 					$("#modifyForm").hide();
+				});
+				// 이렇게 하면 안된다.
+			};*/
+			// 수정 폼 초기화 ( 오류 수정 후 )
+			const modifyForm = function (data) {
+				$("#list,#regBtn").hide();
+				$("#modifyForm").show();
+				$("#modifyForm input[name='id']").val(data.id);
+				$("#modifyForm input[name='title']").val(data.title);
+				$("#modifyForm textarea[name='content']").val(data.content);
+			};
+			// 수정 폼 초기화
+			const modifyFormInit = function () {
+				$("#modifyCloseBtn").on("click", function () {
+					console.log(this);
+					$("#list,#regBtn").show();
+					$("#modifyForm").hide();
+				});
+
+				// 수정 -> 쓰기 버튼
+				$("#modifyBtn").on("click", function () {
+					const id = $.trim($("#modifyForm input[name='id']").val());
+					const title = $.trim($("#modifyForm input[name='title']").val());
+					const content = $.trim(
+						$("#modifyForm textarea[name='content']").val()
+					);
+					console.log(title, content);
+					if (title == "") {
+						alert("제목을 입력해 주세요.");
+						$("#modifyForm input[name='title']").focus();
+						return false;
+					}
+					if (content == "") {
+						alert("내용을 입력해 주세요.");
+						$("#modifyForm textarea[name='content']").focus();
+						return false;
+					}
+
+					// DATABASE에 저장하기
+
+					if (confirm("정말 수정할까요?")) {
+						const apiUrl = "http://diddudqh.dothome.co.kr/board/update.php";
+						$.ajax({
+							type: "POST",
+							url: apiUrl,
+							data: {
+								id: id,
+								title: title,
+								content: content,
+							},
+							dataType: "json",
+							success: function (data) {
+								// console.log("insert result", data);
+								if (data.result == "Y") {
+									alert("수정 성공!");
+									$("#modifyCloseBtn").trigger("click");
+									getList();
+								} else {
+									alert("수정 실패");
+								}
+							},
+							error: function (jqXHR, textStatus, errorThrown) {
+								console.log(textStatus + "," + errorThrown);
+							},
+						});
+					}
 				});
 			};
 
 			// 페이지 로드시 실행할 함수
 			const init = function () {
 				writeFormInit();
+				modifyFormInit();
 				getList();
 			};
 
@@ -218,11 +315,11 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
+						<!--<tr>
 							<td colspan="4" style="text-align: center">
 								등록 된 내용이 없습니다.
 							</td>
-						</tr>
+						</tr>-->
 						<!--
                   <tr>
                     <td>5</td>

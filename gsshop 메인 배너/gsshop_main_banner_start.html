@@ -17,25 +17,49 @@
 
 				for (let index = 0; index < aTagList.length; index++) {
 					aTagList[index].onmouseover = function () {
+						console.log(sId);
+						clearInterval(sId);
 						// html class Attribute 는 DOM 으로 가면 className으로 바뀐다.
 						// console.log(buttonList.getElementsByClassName("on"));
 						const myNum = this.getAttribute("num");
-						for (let i = 0; i < aTagList.length; i++) {
-							if (aTagList[i].getAttribute("num") == myNum) {
-								aTagList[i].className = "on";
-								liTagList[i].className = "on";
-							} else {
-								aTagList[i].className = "";
-								liTagList[i].className = "";
-							}
-							/*console.log(
+						changeMenu(myNum);
+						// this.className = "on";
+					};
+					aTagList[index].onmouseout = function () {
+						sId = setInterval(myTimer, 2500);
+					};
+				}
+
+				// 함수 분리
+				const changeMenu = function (myNum) {
+					for (let i = 0; i < aTagList.length; i++) {
+						if (aTagList[i].getAttribute("num") == myNum) {
+							aTagList[i].className = "on";
+							liTagList[i].className = "on";
+						} else {
+							aTagList[i].className = "";
+							liTagList[i].className = "";
+						}
+						/*console.log(
 								aTagList[i].getAttribute("num"),
 								this.getAttribute("num")
 							);*/
-						}
-						this.className = "on";
-					};
-				}
+					}
+				};
+
+				//
+				const myTimer = () => {
+					const aTag = buttonList.getElementsByClassName("on")[0];
+					// console.log(aTag.getAttribute("num"));
+					const currentNum = parseInt(aTag.getAttribute("num"));
+					let nextNum = currentNum + 1;
+					if (nextNum >= aTagList.length + 1) {
+						nextNum = 1;
+					}
+					changeMenu(nextNum);
+					// console.log(currentNum, typeof currentNum, parseInt(currentNum));
+				};
+				let sId = setInterval(myTimer, 2500);
 			};
 
 			window.onload = init;

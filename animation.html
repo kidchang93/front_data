@@ -16,15 +16,25 @@
 				$("#moveBtn").on("click", function () {
 					$("#box").animate(
 						{
-							left: "500px",
+							left: "500px", // property
 							top: "500px",
 							width: "50px",
 							// opacity: 0,
 						},
-						1000,
-						"easeOutQuart",
+						1000, // 적용 시간
+						"easeOutQuart", // 적용 방법
 						function () {
 							console.log("animation end");
+							$("#box").animate(
+								{
+									left: "50px", // property
+									top: "50px",
+									width: "500px",
+									// opacity: 0,
+								},
+								1000,
+								"easeOutQuart"
+							);
 						}
 					);
 				});

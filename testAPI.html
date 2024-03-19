@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script>
+			let itemIdList = {
+				itemList: [
+					{
+						itemNo: 1,
+						itemId: 493731,
+						questionFormCode: "50",
+						questionFormName: "5지 선택",
+						difficultyCode: "03",
+						difficultyName: "중",
+						largeChapterId: 115901,
+						largeChapterName: "1. 문학의 샘",
+						mediumChapterId: 11590101,
+						mediumChapterName: "(1) 문학의 다양한 해석",
+						smallChapterId: 1159010101,
+						smallChapterName: "청포도",
+						topicChapterId: 115901010102,
+						topicChapterName: "작품의 내용",
+						passageId: 24228,
+						passageUrl:
+							"https://img.chunjae-platform.com/upload/capture/tsherpa/passage/24228/24228_2023-12-22.svg",
+						questionUrl:
+							"https://img.chunjae-platform.com/upload/capture/tsherpa/question/493731/493731_2023-10-13.svg",
+						answerUrl:
+							"https://img.chunjae-platform.com/upload/capture/tsherpa/answer/493731/493731_2023-10-13.svg",
+						explainUrl:
+							"https://img.chunjae-platform.com/upload/capture/tsherpa/explain/493731/493731_2023-10-13.svg",
+					},
+					{
+						itemNo: 2,
+						itemId: 493732,
+						questionFormCode: "50",
+						questionFormName: "5지 선택",
+						difficultyCode: "03",
+						difficultyName: "중",
+						largeChapterId: 115901,
+						largeChapterName: "1. 문학의 샘",
+						mediumChapterId: 11590101,
+						mediumChapterName: "(1) 문학의 다양한 해석",
+						smallChapterId: 1159010101,
+						smallChapterName: "청포도",
+						topicChapterId: 115901010102,
+						topicChapterName: "작품의 내용",
+						passageId: 24228,
+						passageUrl:
+							"https://img.chunjae-platform.com/upload/capture/tsherpa/passage/24228/24228_2023-12-22.svg",
+						questionUrl:
+							"https://img.chunjae-platform.com/upload/capture/tsherpa/question/493732/493732_2023-10-13.svg",
+						answerUrl:
+							"https://img.chunjae-platform.com/upload/capture/tsherpa/answer/493732/493732_2023-10-13.svg",
+						explainUrl:
+							"https://img.chunjae-platform.com/upload/capture/tsherpa/explain/493732/493732_2023-10-13.svg",
+					},
+				],
+			};
+			console.log(itemIdList.itemList.length);
+			let pArr = [];
+			let pIdArr = [];
+			let qIdArr = [];
+			let pqArr = [];
+
+			for (let i = 0; i < itemIdList.itemList.length; i++) {
+				pArr = itemIdList.itemList[i];
+				pIdArr = itemIdList.itemList[i].passageId;
+				qIdArr = itemIdList.itemList[i].itemId;
+
+				pqArr = [pIdArr, qIdArr];
+				console.log(pqArr);
+			}
+		</script>
+	</head>
+	<body></body>
+</html>
